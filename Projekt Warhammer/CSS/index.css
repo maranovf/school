@@ -1,0 +1,19 @@
+.html {
+}
+
+.h {
+ text-align:center;
+ font-weight:900;
+}
+
+p {
+ text-align:justify;
+}
+
+.img {
+  float: right;
+}
+
+.text {
+ margin:2%;
+}
