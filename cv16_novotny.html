@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Bezpečné přihlášení na SSH s hardwarovým U2F tokenem</title>
+</head>
+<body style="display: grid">
+<div>
+    <h1 style="text-align: center">Bezpečné přihlášení na SSH s hardwarovým U2F tokenem</h1>
+</div>
+<div>
+    <h2 style="color: blue">Obsah článku</h2>
+    <ul style="list-style-type: none; width: 15%">
+        <li style="border: 1px gray; border-style: solid;">Klíče SSH</li>
+        <li style="border: 1px gray; border-style: solid; color: blue"><a href="#klic_na_disku">Klíč na disku</a></li>
+        <li style="border: 1px gray; border-style: solid; color: blue"><a href="#u2f_jako_uloziste_klicu">U2F jako úložiště klíčů</a></li>
+        <li style="border: 1px gray; border-style: solid;">Přihlášení pomocí U2F</li>
+    </ul>
+</div>
+<div>
+    <h2>Klíče v SSH</h2>
+</div>
+<div>
+    <p>Přihlašování pomocí páru klíčů zvyšuje výrazně bezpečnost SSH. Případný útočník nemá možnost hádat kombinaci jména a hesla, pro uživatele je navíc vše pohodlnější. Nemusí si nikam ukládat
+        unikátní složité heslo pro každou službu a pak ho vyhledávat v případě potřeby přihlášení.</p>
+    <p>Místo toho si vytvoří pár klíčů: veřejný a soukromý. Veřejný klíč nahraje na všechny servery, ke kterým se chce v budoucnu přihlašovat. Soukromý klíč zůstává v souboru na lokálním disku a
+        nesmí jej nikdy opustit.</p>
+</div>
+<div>
+    <h2><a name="klic_na_disku">Klíč na disku</a></h2>
+</div>
+<div>
+    <p>Bezpečnostní riziko tu představuje především soukromý klíč uložený v běžném souboru na disku. Ten je chráněn pomocí šifrování a odemyká se do paměti, aby mohl být použit. Pro zjednodušení života
+        správců byl vynalezen SSH agent, který si klíče drží</p>
+    <p>Dešifrovaný klíč je tak připraven k použití a pokud se chce uživatel někam přihlásit, jeho SSH klient se připojí k agentovi a vyžádá si podpis přihlašovací zprávy. Agent může být nastaven tak,
+        že každý požadavek musí být uživatelem potvrzen, aby si libovolný proces nemohl potichu vystavovat libovolný počet podpisů.</p>
+</div>
+<div>
+    <h2><a name="u2f_jako_uloziste_klicu">U2F jako úložiště klíčů</a></h2>
+</div>
+<div>
+    <p>U2F je standard konsorcia FIDO, který nabízí bezpečné dvoufaktorové přihlášení, typicky k webovým službám. Základem je hardwarové zařízení – token. To se vkládá do USB nebo je možné jej u některých
+        modelů připojit k mobilnímu telefonu pomocí NFC. Takový token stojí obvykle vyšší stokoruny a lze jej pořídit u různých výrobců, stačí hledat U2F.</p>
+</div>
+<div>
+    <h2>Přihlášení pomocí U2F</h2>
+</div>
+<div>
+    <p>Uvnitř tokenu je od výroby napevno vestavěn soukromý klíč, který zařízení nikdy nevydá. Je to tajemství, které nikdy neuvidí ani uživatel, ani nikdo jiný. Každý token je pak unikátní a pomocí
+        algoritmů pracujících s veřejným klíčem pak jen prokazuje svou fyzickou existenci. Pokud uživatel takto dokáže, že drží v ruce správný token, může být přihlášen.</p>
+</div>
+</body>
+</html>
